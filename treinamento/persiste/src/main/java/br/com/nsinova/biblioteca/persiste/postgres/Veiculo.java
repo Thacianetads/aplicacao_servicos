@@ -1,0 +1,44 @@
+package br.com.nsinova.biblioteca.persiste.postgres;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import br.com.nsinova.biblioteca.persiste.IVeiculo;
+import builders.ServicoBuilder;
+import builders.VeiculoBuilder;
+
+public class Veiculo implements IVeiculo{
+    private final Connection conexao;
+
+    public Servico(Connection conexao) {
+        this.conexao = conexao;
+    }
+
+    private StringBuilder montarSQL(){
+        StringBuilder textoSQL = new StringBuilder();
+        textoSQL.append("SELECT placa");
+        textoSQL.append("from veiculo");
+        return textoSQL;
+    }
+
+    private br.com.nsinova.biblioteca.modelo.Veiculo montarItem(ResultSet resultSet) throws SQLException{
+        Veiculo veiculo = VeiculoBuilder.builder()
+        .setPlaca(resultSet.getString("placa"))
+        .build();
+    }
+
+     @Override
+    public int manter(br.com.nsinova.biblioteca.modelo.Pessoa pessoa) throws SQLException {
+        StringBuilder textoSQL = new StringBuilder();
+        textoSQL.append("INSERT INTO veiculo ");
+        textoSQL.append("(placa)");
+        textoSQL.append("VALUES(?) ");
+        
+        try(PreparedStatement comando = conexao.prepareStatement(textoSQL.toString())){
+            comando.setString(1, servico.getVeiculo()).getPlaca();
+            return comando.executeUpdate();
+        }
+    }
+}
