@@ -5,7 +5,7 @@ import br.com.nsinova.biblioteca.persiste.postgres.Pessoa;
 public class PessoaBuilder {
     private int id;
     private String nome;
-    private String dt_nasc;
+    private Date dt_nasc;
     private String cpf_cnpj;
 
     private PessoaBuilder(){}
